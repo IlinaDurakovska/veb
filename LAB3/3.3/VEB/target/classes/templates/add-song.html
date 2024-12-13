@@ -1,0 +1,28 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Add Song</title>
+
+</head>
+<body>
+
+    <form th:method="POST" th:action="(${editSong} ? '/songs/edit/'+${songId} : '/songs/add')">
+
+        <label for="title">Title: </label><input name="title" type="text" id="title" th:value="(${editSong}? ${song.getTitle()} : '')"><br>
+        <label for="genre">Genre: </label><input name="genre" type="text" id="genre" th:value="(${editSong}? ${song.getGenre()} : '')"><br>
+        <label for="trackId">Track Id: </label><input name="trackId" type="text" id="trackId" th:value="(${editSong}? ${song.getTrackId()} : '')"><br>
+        <label for="year">Year: </label><input name="year" type="text" id="year" th:value="(${editSong}? ${song.getReleaseYear()} : '')"><br>
+
+        <select name="albumId">
+            <option th:if="${editSong}==false" th:each="album : ${albums}" th:text="${album.name}" th:value="${album.id}"></option>
+            <option th:if="${editSong}" th:selected="${song.getAlbum().id}" th:each="album : ${albums}" th:text="${album.name}" th:value="${album.id}"></option>
+        </select>
+        <br>
+        <br>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+</body>
+</html>
