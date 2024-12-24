@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Songs for Album</title>
+</head>
+<body>
+
+<h2>Choose an album:</h2>
+<form th:method="POST" th:action="@{/albums}">
+    <div th:each="a : ${albs}">
+        <label>
+            <input type="radio" name="chosenAlbum" th:value="${a.getId()}">
+            <span th:text="${a.getName()}"></span>
+        </label>
+    </div>
+    <br>
+    <input type='submit' value='Show songs for Album'>
+</form>
+
+<div th:if="${showSongs}">
+    <h3>Songs in the Album:</h3>
+    <ul>
+        <li th:each="s : ${albumSongs}" th:text="${s.getTitle()}">Song Name</li>
+    </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<html xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Songs Homepage - Welcome to My Music Store</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to My Music Store</h1>
+</header>
+<main>
+    <h2>Choose a song:</h2>
+    <!-- -->
+    <form th:method="POST" th:action="@{/songs}">
+        <div th:each="song : ${songs}">
+            <p>
+                Title: <th:block th:text="${song.getTitle()}"></th:block>
+                Genre: <th:block th:text="${song.getGenre()}"></th:block>
+                Release Year: <th:block th:text="${song.getReleaseYear()}"></th:block>
+                Album: <th:block th:text="${song.getAlbum() != null} ? ${song.getAlbum().getName()} : 'frc'"></th:block>
+                <br>
+                <a th:href="@{'/songs/edit-form/{songId}' (songId=${song.getId()})}" sec:authorize="hasRole('ADMIN')"> Edit </a>
+                <a th:href="@{'/songs/delete/{id}' (id=${song.getId()})}" sec:authorize="hasRole('ADMIN')"> Delete </a>
+            </p>
+            <input type="radio" name="chosenTrack" th:value="${song.trackId}">
+        </div>
+        <br>
+        <input type='submit' value='Submit'>
+    </form>
+
+    <br>
+
+    <a th:href="@{'/songs/add-form'}" th:method="GET" sec:authorize="hasRole('ADMIN')"> Add New Song </a>
+
+    <br>
+    <br>
+
+    <form th:action="@{/logout}" method="POST">
+        <button type="submit">Logout</button>
+    </form>
+
+</main>
+</body>
+</html>
